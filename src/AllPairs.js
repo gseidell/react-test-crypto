@@ -4,30 +4,27 @@ import Pair from './Pair.js';
 
 class AllPairs extends Component {
 
-    constructor (props){
+    constructor(props) {
         super(props);
         this.state = {
-            data : null,
+            data: null,
         };
     }
 
     render() {
         if (this.state.data != null)
             return (
-                this.state.data.map(p => <Pair data={p}/>)
+                this.state.data.map(p => <Pair data={p} />)
             );
         return null;
     }
 
-    componentDidMount() {        
-        this.getData().then(
-            value => {
-                this.setState({data: value});
-            }
-        );
+    async componentDidMount() {
+        const data = await this.getData();
+        this.setState({data});
     }
 
-    async getData(){
+    async getData() {
         return fetch('https://www.bitstamp.net/api/v2/trading-pairs-info/').then(response => response.json());
     }
 
